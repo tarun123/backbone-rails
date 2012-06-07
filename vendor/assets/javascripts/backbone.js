@@ -973,6 +973,7 @@
       var match = loc.href.match(/#(.*)$/);
       return match ? match[1] : '';
     },
+/* Tarun: commenting out this code and using latest developer version. On IE Backbone.history.start was causing a redirect to "/"
 
     // Get the cross-browser normalized URL fragment, either from the URL,
     // the hash, or the override.
@@ -982,6 +983,21 @@
           fragment = window.location.pathname;
           var search = window.location.search;
           if (search) fragment += search;
+        } else {
+          fragment = this.getHash();
+        }
+      }
+      if (!fragment.indexOf(this.options.root)) fragment = fragment.substr(this.options.root.length);
+      return fragment.replace(routeStripper, '');
+    },
+*/
+
+    // Get the cross-browser normalized URL fragment, either from the URL,
+    // the hash, or the override.
+    getFragment: function(fragment, forcePushState) {
+      if (fragment == null) {
+        if (this._hasPushState || !this._wantsHashChange || forcePushState) {
+          fragment = window.location.pathname;
         } else {
           fragment = this.getHash();
         }
